@@ -3,16 +3,16 @@
 """
 Created on Mon Oct 15 20:21:15 2018
 
-@author: petersimchuk
+@author: petersimchuk/bethanyreagan
 """
 
 class Movie(object):
-    def __init__(self, children, regular, new_release):
-        self.children = children
-        self.regular = regular
-        self.new_release = new_release
+    def __init__(self, title, price, genre):
+        self.title = title
+        self.price = price
+        self.genre = genre
     def __str__(self):
-        return str(self.children) + str(self.regular) + str(self.new_release)
+        return str(self.title) + str(self.price) + str(self.genre)
 #        return "Type Movie:  " + str(self.children) + str(self.regular) + str(self.new_release)
 
 
