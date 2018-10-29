@@ -43,7 +43,7 @@ def main():
         elif(answer==3):
             showRenters(customers)
         elif(answer==4):
-            pass
+            showOverdue(customers,movies)
         elif(answer==5):
             pass
         elif(answer==6):
@@ -70,8 +70,8 @@ def loadCust(filename, customers):
             lastName = row[1]
             custID = row[2]
             renting = row[3]
-            cust = [Customer(firstName, lastName, custID, renting)]
-            customers.append(cust)
+            customer = Customer(firstName, lastName, custID, renting)
+            customers.append(customer)
 
     print("\nCustomer file has been loaded\n")
 
@@ -97,10 +97,10 @@ def loadMovie(filename, movies):
             genre = row[2]
             out = row[3]
             rentedBy = row[4]
-            daysOut = row[5]
-            daysOver = row[6]
-            film = Movie(title, ID, genre, out, rentedBy, daysOut, daysOver)
-            movies.append(film)
+            daysOut = int(row[5])
+            daysOver = int(row[6])
+            movie = Movie(title, ID, genre, out, rentedBy, daysOut, daysOver)
+            movies.append(movie)
 
     print("\nMovie file has been loaded\n")
 
@@ -109,19 +109,32 @@ def showRenters(customers):
     #check and see if the customers list is loaded
     if(len(customers) == 0):
         print("\nCustomer file has not been loaded!\n")
+    if(len(movies) == 0):
+        print("\nCustomer file has not been loaded!\n")
 
     #print all customers who have stuff rented out
+    print("\nThese are the people currently renting from us: ")
     for customer in customers:
-        if(customer[3]=="yes"):
-            print(customer[0],customer[1])
+        #print(customer)
+        if(customer.renting =="yes"):
+            print("\t",customer.firstName,customer.lastName,)
+    print("\n")
 
 
 
 """ Shows any customers who haven't turned in movies during rental period """
 def showOverdue(customers, movies):
+    print("\n", "These customers are overdue:")
+    for movie in movies:
+        if(movie.daysOver != 0):
+            for customer in customers:
+                if(movie.rentedBy == customer.custID):
+                    print(customer.firstName, customer.lastName, "is", movie.daysOver, "days overdue.")
+    print("\n")
+                
     #search movies for daysOver > 0
     #print customers that match customer code in movie file.
-
+    pass
 
 
 """ Helps customer rent a movie """
@@ -135,7 +148,7 @@ def rentFilm(customers, movies):
     #   if movie not in database, reject.
     #   if movie in database, match customer id in to movie object, reset
     #       days out to 0, days overdue to 0
-
+    pass
 
 
 """ helps customer pay bill """
@@ -145,7 +158,7 @@ def payBill(customers, movies):
 
     #make a payment
     #reset fees as fees - payment, except not lower than zero.
-
+    pass
     
 
     
@@ -158,6 +171,24 @@ class Customer:
         self.custID = custID
         self.renting = renting
 
+    def setFirst(self, firstName):
+        self.firstName = firstName
+    def setLast(self, lastName):
+        self.lastName = lastName
+    def setID(self, custID):
+        self.custID = custID
+    def setRenting(self, renting):
+        self.renting = renting
+
+    def getFirst(self):
+        return self.firstName
+    def getLast(self):
+        return self.lastName
+    def getID(self):
+        return self.custID
+    def getRenting(self):
+        return renting
+
 
 """ Movie class to create movie objects """
 class Movie:
@@ -169,6 +200,36 @@ class Movie:
         self.rentedBy = rentedBy
         self.daysOut = daysOut
         self.daysOver = daysOver
+
+    def setTitle(self, title):
+        self.title = title
+    def setID(self, ID):
+        self.ID = ID
+    def setGenre(self, genre):
+        self.genre = genre
+    def setOut(self, out):
+        self.out = out
+    def setRentedBy(self, rentedBy):
+        self.rentedBy = rentedBy
+    def setDaysOut(self, daysOut):
+        self.daysOut = daysOut
+    def setDaysOver(self, daysOver):
+        self.daysOver = daysOver
+
+    def getTitle(self):
+        return self.title
+    def getID(self):
+        return self.ID
+    def getGenre(self):
+        return self.genre
+    def getOut(self):
+        return self.out
+    def getRentedBy(self):
+        return self.rentedBy
+    def getDaysOut(self):
+        return self.daysOut
+    def getDaysOver(self):
+        return self.daysOver
         
     
 
