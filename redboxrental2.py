@@ -72,8 +72,10 @@ def loadCust(filename, customers):
             renting = row[3]
             customer = Customer(firstName, lastName, custID, renting)
             customers.append(customer)
+            print(customer.lastName, customer.firstName)
 
     print("\nCustomer file has been loaded\n")
+    
 
 
 def loadMovie(filename, movies):
@@ -129,7 +131,8 @@ def showOverdue(customers, movies):
         if(movie.daysOver != 0):
             for customer in customers:
                 if(movie.rentedBy == customer.custID):
-                    print(customer.firstName, customer.lastName, "is", movie.daysOver, "days overdue.")
+                    print(customer.firstName, customer.lastName, "is", movie.daysOver,
+                          "days overdue with movie:", movie.title)
     print("\n")
                 
     #search movies for daysOver > 0
