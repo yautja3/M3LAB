@@ -1,13 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Author: Reagan
-Prints out a list of students
-"""
+Created on Tue Oct 30 15:46:00 2018
 
+@author: petersimchuk
 """
-WARNING: This program does not write to file.  Any changes made will not
-be saved.
-"""
-
+'''
+Bethany.  I tried to do an invoice method.  Please see comment at the method above classes.  Help!
+'''
 import csv
 
 def main():
@@ -30,7 +30,8 @@ def main():
         print("2. Load movies database.")
         print("3. Display currently renting customers.")
         print("4. Display overdue customers.")
-        print("5. Rent a movie to a customer.")
+        print("5. Display the invoice.")
+#        print("5. Rent a movie to a customer.")
         print("6. Take payment from customer.")
         print("7. Exit")
         answer = int(input("Please make a selection  "))
@@ -41,11 +42,11 @@ def main():
         elif(answer==2):
             loadMovie(filename2, movies)
         elif(answer==3):
-            showRenters(customers)
+            showRenters(customers,movies)
         elif(answer==4):
             showOverdue(customers,movies)
         elif(answer==5):
-            pass
+            printInvoice(customers,movies)
         elif(answer==6):
             pass
         elif(answer==7):
@@ -99,19 +100,24 @@ def loadMovie(filename, movies):
             genre = row[2]
             out = row[3]
             rentedBy = row[4]
-            daysOut = int(row[5])
-            daysOver = int(row[6])
+            daysOut = row[5]
+            daysOver = row[6]
+#            daysOut = int(row[5])
+#            daysOver = int(row[6])
             movie = Movie(title, ID, genre, out, rentedBy, daysOut, daysOver)
             movies.append(movie)
+            
 
     print("\nMovie file has been loaded\n")
 
-
-def showRenters(customers):
+def showRenters(customers,movies):
+#def showRenters(customers):
     #check and see if the customers list is loaded
-    if(len(customers) == 0):
+    if len(customers) == 0:
+#    if(len(customers) == 0):
         print("\nCustomer file has not been loaded!\n")
-    if(len(movies) == 0):
+    if len(movies) == 0:
+#    if(len(movies) == 0):
         print("\nCustomer file has not been loaded!\n")
 
     #print all customers who have stuff rented out
@@ -125,10 +131,25 @@ def showRenters(customers):
 
 
 """ Shows any customers who haven't turned in movies during rental period """
+'''
+Bethany:  Placed an 'else' stmnt and changed int(0) to str(0).  This way those who are not
+overdue do not show up.  
+'''
+#def showOverdue(customers, movies):
+#    print("\n", "These customers are overdue:")
+#    for movie in movies:
+#        if(movie.daysOver != 0):
+#            for customer in customers:
+#                if(movie.rentedBy == customer.custID):
+#                    print(customer.firstName, customer.lastName, "is", movie.daysOver,
+#                          "days overdue with movie:", movie.title)
+     
 def showOverdue(customers, movies):
     print("\n", "These customers are overdue:")
     for movie in movies:
-        if(movie.daysOver != 0):
+        if(movie.daysOver == '0'):
+            pass
+        else:
             for customer in customers:
                 if(movie.rentedBy == customer.custID):
                     print(customer.firstName, customer.lastName, "is", movie.daysOver,
@@ -162,8 +183,21 @@ def payBill(customers, movies):
     #make a payment
     #reset fees as fees - payment, except not lower than zero.
     pass
+'''Bethany.  Help!  It shows that Sharon Hobbit is two days overdue, but when I run this it shows that she is 
+0 days overdue.  Why isn't Sharon's overdue days 'linked' with her name?  Help!
+'''   
+def printInvoice(customers,movies):
+    custFname = input("Enter the customer's first name: ")
+    custLname = input("Enter the customer's last name: ")
+    for movie in movies:
+        total = int(movie.daysOver) * 2
+    for customer in customers:
+        if custFname == customer.firstName and custLname == customer.lastName:
+            
+            print(customer.firstName,customer.lastName, "\nMovie:", movie.title, "\nDays Overdue:",movie.daysOver,
+                          "\nTotal Price:", total )
+   
     
-
     
 
 """ Customer class to create customer objects """
